@@ -13,8 +13,7 @@ Gem::Specification.new do |s|
   s.homepage      = "http://rubygems.org/gems/disdar"
   s.license       = "MIT"
 
-  s.add_development_dependency "webmock", ["= 1.17.4"]
-
+  s.add_runtime_dependency "webmock", ["= 1.17.4"]
   s.add_runtime_dependency "httmultiparty", ["= 0.3.13"]
   s.add_runtime_dependency "json", ["= 1.8.0"]
 end
