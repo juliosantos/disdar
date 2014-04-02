@@ -2,6 +2,8 @@
 
 A RESTful consumer of [Disdar's API](http://disdar.com/api_documentation.html).
 
+[![Build Status](https://travis-ci.org/juliosantos/disdar.svg?branch=master)](https://travis-ci.org/juliosantos/disdar)
+
 ## Installation
 
 ```bash
