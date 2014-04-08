@@ -6,7 +6,7 @@ class DisdarTest::PlanTest < Test::Unit::TestCase
   include ::TestSupport
 
   def test_resource_path
-    assert_equal Disdar::Export.resource_path, "/plans"
+    assert_equal Disdar::Plan.resource_path, "/plans"
   end
 
   def test_get_plan_list

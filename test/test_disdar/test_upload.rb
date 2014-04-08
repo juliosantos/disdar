@@ -6,7 +6,7 @@ class DisdarTest::UploadTest < Test::Unit::TestCase
   include ::TestSupport
 
   def test_resource_path
-    assert_equal Disdar::Export.resource_path, "/uploads"
+    assert_equal Disdar::Upload.resource_path, "/uploads"
   end
 
   def test_create_upload

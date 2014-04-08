@@ -6,7 +6,7 @@ class DisdarTest::DocumentTest < Test::Unit::TestCase
   include ::TestSupport
 
   def test_resource_path
-    assert_equal Disdar::Export.resource_path, "/documents"
+    assert_equal Disdar::Document.resource_path, "/documents"
   end
 
   def test_get_empty_document_list
