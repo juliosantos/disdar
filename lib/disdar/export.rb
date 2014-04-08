@@ -1,14 +1,24 @@
 class Disdar::Export < Disdar::Resource
   # TODO read, list, delete
 
-  RESOURCE_PATH = "/exports"
+  def self.resource_path
+    "/exports"
+  end
 
-  def self.create
+  def self.create_json(name)
+    self.create( name: name, filetype: "EXPORT_JSON" )
+  end
+
+  def self.create_excel(name)
+    self.create( name: name, filetype: "EXPORT_EXCEL" )
+  end
+
+  def self.create(name: "export", filetype: "EXPORT_JSON")
     body = {
-      name: "awesome-export",
-      fileType: "EXPORT_EXCEL"
+      name: name,
+      fileType: filetype
     }.to_json
-    Disdar.call_api path: RESOURCE_PATH, method: :post, body: body, headers: {"Content-Type" => "application/json"}
+    Disdar.call_api path: self.resource_path, method: :post, body: body, headers: {"Content-Type" => "application/json"}
   end
 end
 

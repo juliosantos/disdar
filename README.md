@@ -17,23 +17,36 @@ export DISDAR_API_KEY="your-key"
 
 Only a subset of [Disdar's available resources](http://disdar.com/api_resource_reference.html) are supported for now.
 
-Resouces for which the `DELETE` method is implemented have a deletion shorthand:
+Resouces for which the `DELETE` method is implemented have a deletion method shorthand:
 
 ```ruby
 d = Disdar::Document.get( 123 )
-d.delete # calls inherited Disdar::Document.delete( 123 ) behind the scenes
+d.delete # DELETE /documents/123
 ```
 
 ### Callback
 
-*provisionally unsupported*
+```ruby
+Disdar::Callback.create( url: "http://example.com/disdar", state: "DONE" ) # DELETE /callbacks/uuid
+Disdar::Callback.list # GET /callbacks
+Disdar::Callback.get( uuid ) # GET /callbacks/uuid
+Disdar::Callback.update( uuid, url: "http://example.com/disdar", state: "DONE" ) # DELETE /callbacks/uuid
+Disdar::Callback.delete( uuid ) # DELETE /callbacks/uuid
+```
+
+A Callback object will have an update method too:
+
+```ruby
+c = Disdar::Callback.get( 123 )
+c.update( 123, url: "http://example.com/disdar", state: "DONE" ) # calls Disdar::Callback( 123, url: "http://example.com/disdar", state: "DONE" )
+```
 
 ### Document
 
 ```ruby
 Disdar::Document.list # GET /documents
-Disdar::Document.get( uuid ) # GET /document/uuid
-Disdar::Document.delete( uuid ) # DELETE /document/uuid
+Disdar::Document.get( uuid ) # GET /documents/uuid
+Disdar::Document.delete( uuid ) # DELETE /documents/uuid
 ```
 
 You'll also find a helper for GETting the parsing results:
@@ -43,14 +56,28 @@ d = Disdar::Document.get( 123 )
 d.results # results object from parsing the JSON in d.resultsUrl
 ```
 
-### Upload
+### Export
 
-*creation still provisional*
+```ruby
+Disdar::Export.create_json( name ) # POST /exports, fileType: EXPORT_JSON
+Disdar::Export.create_excel( name ) # POST /exports, fileType: EXPORT_EXCEL
+Disdar::Export.list # GET /exports
+Disdar::Export.get( uuid ) # GET /exports/uuid
+```
+
+### Plan
+
+```ruby
+Disdar::Plan.list # GET /plans
+Disdar::Plan.get( uuid ) # GET /plans/uuid
+```
+
+### Upload
 
 ```ruby
 Disdar::Upload.list # GET /uploads
 Disdar::Upload.get( uuidUpload ) # GET /uploads/uuidUpload
-Disdar::Upload.create # POST /uploads
+Disdar::Upload.create( filename ) # POST /uploads
 Disdar::Upload.delete( uuidUpload ) # DELETE /uploads/uuidUpload
 ```
 
@@ -61,22 +88,17 @@ u = Disdar::Upload.get( 123 )
 u.documents # GET /uploads/123/documents
 ```
 
-### Export
+### Unsupported resources
 
-*creation still provisional*
+*Authentication*, *Quota* and *Subuser* aren't yet available through this gem.
 
-```ruby
-Disdar::Export.create # POST /exports
-```
+### Unsupported features
 
-### Plan
+Pagination, which will kick in after the default 100 items per page, is as of yet unsupported by this gem.
 
-```ruby
-Disdar::Plan.list # GET /plans
-Disdar::Plan.get( uuid ) # GET /plans/uuid
-```
+Filtering by date/time range is also unsupported.
 
 ## Testing
 
-The test suite is still underway. For now, only `Disdar::Document` is covered. Run them with `rake test`
+Run the test suite with `rake test`
 
